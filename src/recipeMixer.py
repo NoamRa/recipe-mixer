@@ -1,6 +1,16 @@
-import recipeParser
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# site packages
 import json
 import os
+
+# external packages
+import flask
+
+# local imports
+from logic import recipeParser
+
 
 config = {"recipeDir": ["..", "recipes", "brownies.txt"]}
 

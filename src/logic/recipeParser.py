@@ -1,5 +1,7 @@
-"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
+"""
 ingredient shape
 {
   {
@@ -15,7 +17,6 @@ parsed_recipe shape
   ingredients: ingredient[],
   instructions: string[]
 }
-
 
 """
 
