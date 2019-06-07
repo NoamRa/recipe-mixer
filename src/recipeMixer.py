@@ -2,9 +2,17 @@ import recipeParser
 import json
 import os
 
-if __name__ == "__main__":
+config = {"recipeDir": ["..", "recipes", "brownies.txt"]}
+
+
+def main():
     script_dir = os.path.dirname(__file__)
-    with open(os.path.join(script_dir, "..", "recipes", "brownies.txt"), "r") as reader:
+    with open(os.path.join(script_dir, *config.get("recipeDir")), "r") as reader:
         recipe = reader.read()
     parsed_recepie = recipeParser.parse_recipe(recipe)
     print(json.dumps(parsed_recepie, indent=2))
+
+
+if __name__ == "__main__":
+    main()
+

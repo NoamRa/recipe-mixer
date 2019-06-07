@@ -36,9 +36,10 @@ def parse_instructions(recipe):
 
 
 def parse_recipe(recipe):
-    parsed_recipe = {}
-    parsed_recipe["ingredients"] = parse_ingredients(recipe)
-    parsed_recipe["instructions"] = parse_instructions(recipe)
+    parsed_recipe = {
+        "ingredients": parse_ingredients(recipe),
+        "instructions": parse_instructions(recipe),
+    }
 
     return parsed_recipe
 
