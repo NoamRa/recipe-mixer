@@ -6,7 +6,7 @@ import json
 import os
 
 # external packages
-import flask
+# import flask
 
 # local imports
 from logic import recipeParser
