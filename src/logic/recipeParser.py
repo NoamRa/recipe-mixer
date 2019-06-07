@@ -4,13 +4,12 @@
 """
 ingredient shape
 {
-  {
-    quantity: number,
-    measure: string,
-    name: string,
-    liquidOrSolid: string
-  }
+  quantity: number,
+  measure: string,
+  name: string,
+  liquidOrSolid: string
 }
+
 
 parsed_recipe shape
 {
