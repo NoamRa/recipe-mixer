@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from logic import ingredientList
+
 """
 ingredient shape
 {
-  quantity: number,
+  quantity: float,
   measure: string,
   name: string,
   liquidOrSolid: string
 }
-
 
 parsed_recipe shape
 {
@@ -28,23 +29,34 @@ def clean_recipe(recipe):
     return cleaned
 
 
-def parse_ingredient(raw_ingrediant):
+def parse_ingredient(raw_ingrediant, ingredients_data):
     splitted = raw_ingrediant.split()
     quantity = float(splitted[0])
     measure = splitted[1]
     name = " ".join(splitted[2:])
 
+    properties = []
+    for ing in ingredients_data:
+        if ing["name"] == name:
+            properties = ing["properties"]
+    if len(properties) == 0: # validate
+        print("failed to find properties for {}".format(name))
+
     ingredient = {
         "name": name,
         "quantity": quantity,
         "measure": measure,
-        "properties": [],
+        "properties": properties,
     }
+
     return ingredient
 
 
 def parse_ingredients(raw_ingredients):
-    ingredients = list(map(lambda ingred: parse_ingredient(ingred), raw_ingredients))
+    ingredients_data = ingredientList.ingredient_list()
+    ingredients = list(
+        map(lambda ingred: parse_ingredient(ingred, ingredients_data), raw_ingredients)
+    )
     return ingredients
 
 
