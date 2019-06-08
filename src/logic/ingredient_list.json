@@ -24,7 +24,7 @@
 	"properties": ["liquid"]
 },
 {
-	"name": "cream"
+	"name": "cream",
 	"properties": ["liquid"]
 },
 {
@@ -44,47 +44,47 @@
 	"properties": ["liquid", "coloring"]
 },
 {
-	"name": "fruit_apple“,
+	"name": "fruit_apple",
 	"properties": ["liquid", "coloring"]
 },
 {
-	"name": "fruit_carrot“,
+	"name": "fruit_carrot",
 	"properties": ["liquid", "coloring"]
 },
 {
-	"name": "fruit_raspberries“,
+	"name": "fruit_raspberries",
 	"properties": ["liquid", "coloring"]
 },
 {
-	"name": "sugar“,
+	"name": "sugar",
 	"properties": ["solid"]
 },
 {
-	"name": "brown_sugar“,
+	"name": "brown_sugar",
 	"properties": ["solid"]
 },
 {
-	"name": "flour“,
+	"name": "flour",
 	"properties": ["solid"]
 },
 {
-	"name": "baking_powder“
+	"name": "baking_powder"
 	"properties": ["solid"]
 },
 {
-	"name": "salt“,
+	"name": "salt",
 	"properties": ["solid"]
 },
 {
-	"name": "cocoa“,
+	"name": "cocoa",
 	"properties": ["solid"]
 },
 {
-	"name": "walnuts“,
+	"name": "walnuts",
 	"properties": ["solid"]
 },
 {
-	"name": "almonds“,
+	"name": "almonds",
 	"properties": ["solid"]
 },
 {
