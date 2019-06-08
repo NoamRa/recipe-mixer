@@ -1,98 +1,97 @@
 [
 {
-	name: "milk"
-	properties: ["liquid”]
+	"name": "milk",
+	"properties": ["liquid”]
 },
 {
-	name: "vanille extract"
-	properties: ["liquid”]
+	"name": "vanille_extract",
+	"properties": ["liquid”]
 },
 {
-	name: "eggs"
-	properties: ["liquid”, “undividable”]
+	"name": "eggs",
+	"properties": ["liquid”, “undividable”]
 },
 {
-	name: "butter"
-	properties: ["liquid”]
+	"name": "butter",
+	"properties": ["liquid”]
 },
 {
-	name: "food_coloring"
-	properties: ["liquid”, “coloring”]
+	"name": "food_coloring",
+	"properties": ["liquid”, “coloring”]
 },
 {
-	name: "chocolate"
-	properties: ["liquid”]
+	"name": "chocolate",
+	"properties": ["liquid”]
 },
 {
-	name: "cream"
-	properties: ["liquid”]
+	"name": "cream"
+	"properties": ["liquid”]
 },
 {
-	name: "coffee"
-	properties: ["liquid”]
+	"name": "coffee",
+	"properties": ["liquid”]
 },
 {
-	name: maple syrup
-	properties: ["liquid”]
+	"name": "maple_syrup",
+	"properties": ["liquid”]
 },
 {
-	name: cream_cheese
-	properties: ["liquid”]
+	"name": "cream_cheese",
+	"properties": ["liquid”]
 },
 {
-	name: fruit_strawberry
-	properties: ["liquid”, “coloring”]
+	"name": "fruit_strawberry",
+	"properties": ["liquid”, “coloring”]
 },
 {
-	name: fruit_apple
-	properties: ["liquid”, “coloring”]
+	"name": “fruit_apple“,
+	"properties": ["liquid”, “coloring”]
 },
 {
-	name: fruit_carrot
-	properties: ["liquid”, “coloring”]
+	"name": “fruit_carrot“,
+	"properties": ["liquid”, “coloring”]
 },
 {
-	name: fruit_raspberries
-	properties: ["liquid”, “coloring”]
+	"name": “fruit_raspberries“,
+	"properties": ["liquid”, “coloring”]
 },
 {
-	name: sugar
-	properties: [“solid”]
+	"name": “sugar“,
+	"properties": [“solid”]
 },
 {
-	name: brown_sugar
-	properties: [“solid”]
-},
-
-{
-	name: flour
-	properties: [“solid”]
+	"name": “brown_sugar“,
+	"properties": [“solid”]
 },
 {
-	name: baking_powder
-	properties: [“solid”]
+	"name": “flour“,
+	"properties": [“solid”]
 },
 {
-	name: salt
-	properties: [“solid”]
+	"name": “baking_powder“
+	"properties": [“solid”]
 },
 {
-	name: cocoa
-	properties: [“solid”]
+	"name": “salt“,
+	"properties": [“solid”]
 },
 {
-	name: walnuts
-	properties: [“solid”]
+	"name": “cocoa“,
+	"properties": [“solid”]
 },
 {
-	name: almonds
-	properties: [“solid”]
+	"name": “walnuts“,
+	"properties": [“solid”]
 },
 {
-	name: baking_powder
-	properties: [“solid”]
+	"name": “almonds“,
+	"properties": [“solid”]
 },
 {
-	name: chocolate_chips
-	properties: [“solid”]
-}]  
+	"name": “baking_powder“,
+	"properties": [“solid”]
+},
+{
+	"name": “chocolate_chips“,
+	"properties": [“solid”]
+}]
