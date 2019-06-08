@@ -1,34 +1,34 @@
 [
 {
-	name: milk
+	name: "milk"
 	properties: ["liquid”]
 },
 {
-	name: vanille extract
+	name: "vanille extract"
 	properties: ["liquid”]
 },
 {
-	name: eggs
+	name: "eggs"
 	properties: ["liquid”, “undividable”]
 },
 {
-	name: butter
+	name: "butter"
 	properties: ["liquid”]
 },
 {
-	name: food_coloring
+	name: "food_coloring"
 	properties: ["liquid”, “coloring”]
 },
 {
-	name: chocolate
+	name: "chocolate"
 	properties: ["liquid”]
 },
 {
-	name: cream
+	name: "cream"
 	properties: ["liquid”]
 },
 {
-	name: coffee
+	name: "coffee"
 	properties: ["liquid”]
 },
 {
