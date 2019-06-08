@@ -88,10 +88,6 @@
 	"properties": ["solid"]
 },
 {
-	"name": "baking_powder“,
-	"properties": ["solid"]
-},
-{
 	"name": "chocolate_chips",
 	"properties": ["solid"]
 }]
