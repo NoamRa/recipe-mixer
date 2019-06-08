@@ -39,7 +39,7 @@ def parse_ingredient(raw_ingrediant, ingredients_data):
     for ing in ingredients_data:
         if ing["name"] == name:
             properties = ing["properties"]
-    if len(properties) == 0: # validate
+    if len(properties) == 0:  # validate
         print("failed to find properties for {}".format(name))
 
     ingredient = {
