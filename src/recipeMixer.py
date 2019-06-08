@@ -12,7 +12,7 @@ import os
 from logic import recipeParser
 
 
-config = {"recipeDir": ["..", "recipes", "brownies.txt"]}
+config = {"recipeDir": ["..", "recipes", "cake.txt"]}
 
 
 def main():
