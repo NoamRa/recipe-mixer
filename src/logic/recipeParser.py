@@ -24,9 +24,9 @@ parsed_recipe shape
 def clean_recipe(recipe):
     "break recipe text to list of lines, remove extra spaces and empty lines"
     splited_recipe = recipe.splitlines()
-    cleaned = list(map(lambda x: x.strip(), splited_recipe))
-    cleaned = list(filter(lambda x: x != "", cleaned))
-    return cleaned
+    cleaned = list(map(lambda line: line.strip(), splited_recipe))
+    filtered = list(filter(lambda line: line != "", cleaned))
+    return filtered
 
 
 def parse_ingredient(raw_ingrediant, ingredients_data):
