@@ -11,7 +11,7 @@ import logging
 from flask import Flask, render_template
 
 # local imports
-from logic import recipeParser, textureModifier
+from logic import recipeParser, textureModifier, recipeFormatter
 
 
 config = {
@@ -43,7 +43,9 @@ def mix_recipe():
         # print(json.dumps(transformed, indent=2))
         mixed_recipe["ingredients"] = transformed
 
-    return mixed_recipe
+    formatted_recipe = recipeFormatter.format_recipe(mixed_recipe)
+
+    return formatted_recipe
 
 
 @app.route("/")
@@ -51,7 +53,12 @@ def index():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
     mixed_recipe = mix_recipe()
-    templateData = {"time": timeString, "mixed_recipe": mixed_recipe}
+    templateData = {
+        "time": timeString,
+        "name": mixed_recipe["name"],
+        "ingredients": mixed_recipe["ingredients"],
+        "instructions": mixed_recipe["instructions"],
+    }
     return render_template("index.html", **templateData)
 
 
