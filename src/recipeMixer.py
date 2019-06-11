@@ -11,13 +11,13 @@ import logging
 from flask import Flask, render_template
 
 # local imports
-from logic import recipeParser, textureModifier, recipeFormatter
+from logic import recipeParser, textureModifier, recipeFormatter, randomer
 
 
 config = {
     "recipesDir": ["..", "recipes", "cake.txt"],
     "templatesDir": ["server", "templates"],
-    "do_random": False,
+    "do_random": True,
 }
 do_random = config["do_random"]
 
@@ -35,13 +35,14 @@ def mix_recipe():
     mixed_recipe = dict(parsed_recepie)
     if do_random:
         print("doing random!")
+        mixed_recipe["ingredients"] = randomer.randomise_ingredients(
+            parsed_recepie["ingredients"]
+        )
     else:
         print("not doing random")
-        transformed = textureModifier.texture_modifier(
+        mixed_recipe["ingredients"] = textureModifier.texture_modifier(
             parsed_recepie["ingredients"], 0.5
         )
-        # print(json.dumps(transformed, indent=2))
-        mixed_recipe["ingredients"] = transformed
 
     formatted_recipe = recipeFormatter.format_recipe(mixed_recipe)
 
