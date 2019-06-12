@@ -45,46 +45,54 @@ void loop() {
   int sensorReading = analogRead(analogPin);
   
   //print out the value of the pushbutton
-  Serial.print("button mode: ");
-  Serial.println(sensorVal);
+//  Serial.print("button mode: ");
+//  Serial.println(sensorVal);
 
   int ledLevel = map(sensorReading, 0, 1023, 1, ledCount);
 
   // Keep in mind the pull-up means the pushbutton's logic is inverted. It goes
   // HIGH when it's open, and LOW when it's pressed. Turn on pin 13 when the
   // button's pressed, and off when it's not:
-  if (sensorVal == 1) {
-      Serial.println(sensorAnalog);
-        if (ledLevel==1){
-            Serial.println("red");
+  if (ledLevel==1){
+            //Serial.println("red");
             digitalWrite(3, HIGH);
             digitalWrite(4, LOW);
             digitalWrite(5, LOW);  
+            if (sensorVal == 0) {
+               Serial.println(sensorAnalog);
+            }
         }
         else if (ledLevel==2){
-            Serial.println("yellow");
+            //Serial.println("yellow");
             digitalWrite(4, HIGH);
             digitalWrite(3, LOW);
-            digitalWrite(5, LOW); 
+            digitalWrite(5, LOW);
+            if (sensorVal == 0) {
+               Serial.println(sensorAnalog);
+            } 
         }
 
        else  if (ledLevel==3){
-            Serial.println("green");
+            //Serial.println("green");
             digitalWrite(5, HIGH);
             digitalWrite(3, LOW);
             digitalWrite(4, LOW); 
+            if (sensorVal == 0) {
+               Serial.println(sensorAnalog);
+            }
         }
+        
       
 
 //    digitalWrite(13, LOW);
-  } else {
-      Serial.println("none");
+   else {
+      //Serial.println("none");
       digitalWrite(5, LOW);
       digitalWrite(3, LOW);
       digitalWrite(4, LOW);             
 
 //    digitalWrite(13, HIGH);
   }
-    delay(1000);        // delay in between reads for stability
+    delay(300);        // delay in between reads for stability
 
 }
