@@ -10,6 +10,9 @@ import logging
 # external packages
 from flask import Flask, render_template
 from flask_serial import Serial
+from flask_socketio import SocketIO
+import eventlet
+eventlet.monkey_patch()
 
 # local imports
 from logic import recipeParser, textureModifier, recipeFormatter, randomer
@@ -25,6 +28,7 @@ do_random = config["do_random"]
 script_dir = os.path.dirname(__file__)
 template_folder = os.path.abspath(os.path.join(script_dir, *config.get("templatesDir")))
 print("template_folder: " + template_folder)
+
 app = Flask(__name__, template_folder=template_folder)
 app.config["SERIAL_TIMEOUT"] = 0
 app.config["SERIAL_PORT"] = "/dev/ttyACM1"
@@ -33,20 +37,10 @@ app.config["SERIAL_BYTESIZE"] = 8
 app.config["SERIAL_PARITY"] = "N"
 app.config["SERIAL_STOPBITS"] = 1
 
+app.config["MAX_SIZE"] = 1024 # SocketIO
+
 ser = Serial(app)
-
-@ser.on_message()
-def handle_message(msg):
-    print("receive a message:", msg)
-    # send a msg of str
-    ser.on_send("send a str message!!!")
-    # send a msg of bytes
-    ser.on_send(b"send a bytes message!!!")
-
-
-@ser.on_log()
-def handle_logging(level, info):
-    print(level, info)
+socketio = SocketIO(app)
 
 
 def mix_recipe():
@@ -86,6 +80,25 @@ def index():
     return render_template("index.html", **templateData)
 
 
+@socketio.on("send")
+def handle_send(json_str):
+    data = json.loads(json_str)
+    ser.on_send(data["message"])
+    print("send to serial: %s"%data["message"])
+
+
+@ser.on_message()
+def handle_message(msg):
+    print("receive a message:", msg)
+    socketio.emit("serial_message", data={"message": str(msg)})
+
+
+@ser.on_log()
+def handle_logging(level, info):
+    print(level, info)
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=9090, debug=True)
+    print("Starting Recipe Mixer server")
+    socketio.run(app, host="0.0.0.0", port=9090, debug=False)
 

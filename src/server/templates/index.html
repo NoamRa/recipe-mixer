@@ -2,6 +2,32 @@
 
 <head>
   <title>Recipe Mixer</title>
+  <script 
+    type="text/javascript" 
+    src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js">
+  </script>
+  <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous">
+  </script>
+        
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+      $('#send').click(function(event) {
+        var message = $('#message').val();
+        var data = '{' + '"message": "' + message + '"}';
+        socket.emit('send', data=data);
+      });
+      socket.on('serial_message', function(data) {
+        console.log(data);
+        var text = data['message'];
+        var $textarea = $('#serial_message');
+        $textarea.val($textarea.val() + text + '\n');
+      })
+    });
+  </script>
 </head>
 
 <body>
