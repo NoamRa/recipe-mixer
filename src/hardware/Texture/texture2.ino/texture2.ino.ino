@@ -1,5 +1,3 @@
-
-
 const int buttonPin = 6.0; 
 int buttonState = 0;
 

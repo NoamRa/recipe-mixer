@@ -1,4 +1,3 @@
-
 const int analogPin = A0;   // the pin that the potentiometer is attached to
 const int ledCount = 3;    // the number of LEDs in the bar graph
 const int buttonPin = 6;     // the number of the pushbutton pin
@@ -66,11 +65,3 @@ void loop() {
 
 
   }
-
-
-
-
-
-    
-
-  
