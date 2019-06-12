@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Recipe Mixer</title>
+</head>
+
+<body>
+  <h1>Recipe Mixer!</h1>
+  <h4>The date and time on the server is: {{ time }}</h4>
+  <h3>Your {{ name }} recipe:</h3>
+  <h4>Ingredients</h4>
+  <ol>
+    {% for ingredient in ingredients %} 
+    <li>{{ ingredient }}</li> 
+    {% endfor %} 
+  </ol>
+  <h4>Instructions</h4>
+  <ol>
+    {% for instruction in instructions %} 
+    <li>{{ instruction }}</li> 
+    {% endfor %} 
+  </ol>
+</body>
+
+</html>

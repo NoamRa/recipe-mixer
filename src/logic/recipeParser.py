@@ -6,16 +6,17 @@ from logic import ingredientList
 """
 ingredient shape
 {
-  quantity: float,
-  measure: string,
-  name: string,
-  liquidOrSolid: string
+    quantity: float,
+    measure: string,
+    name: string,
+    liquidOrSolid: string
 }
 
 parsed_recipe shape
 {
-  ingredients: ingredient[],
-  instructions: string[]
+    name: string
+    ingredients: ingredient[],
+    instructions: string[]
 }
 
 """
@@ -66,12 +67,15 @@ def parse_instructions(raw_instructions):
 
 def parse_recipe(recipe):
     cleaned_recipe = clean_recipe(recipe)
+    name_idx = cleaned_recipe.index("name")
     ingredients_idx = cleaned_recipe.index("ingredients")
     instructions_idx = cleaned_recipe.index("instructions")
+
     ingredients_lines = cleaned_recipe[ingredients_idx + 1 : instructions_idx]
     instructions_lines = cleaned_recipe[instructions_idx + 1 :]
 
     parsed_recipe = {
+        "name": cleaned_recipe[name_idx+1],
         "ingredients": parse_ingredients(ingredients_lines),
         "instructions": parse_instructions(instructions_lines),
     }
