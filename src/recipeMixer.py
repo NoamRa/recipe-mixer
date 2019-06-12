@@ -23,10 +23,11 @@ config = {
 do_random = config["do_random"]
 
 script_dir = os.path.dirname(__file__)
-template_folder = os.path.join(script_dir, *config.get("templatesDir"))
+template_folder = os.path.abspath(os.path.join(script_dir, *config.get("templatesDir")))
+print("template_folder: " + template_folder)
 app = Flask(__name__, template_folder=template_folder)
-app.config["SERIAL_TIMEOUT"] = 0.1
-app.config["SERIAL_PORT"] = "COM2"
+app.config["SERIAL_TIMEOUT"] = 0
+app.config["SERIAL_PORT"] = "/dev/ttyACM1"
 app.config["SERIAL_BAUDRATE"] = 9600
 app.config["SERIAL_BYTESIZE"] = 8
 app.config["SERIAL_PARITY"] = "N"
@@ -86,5 +87,5 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", port=9090, debug=True)
 
