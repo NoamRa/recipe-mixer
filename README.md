@@ -1,2 +1,0 @@
-# recipe-mixer
-mix recipes

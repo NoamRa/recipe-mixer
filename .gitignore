@@ -1,7 +1,0 @@
-*.pyc
-*.pyo
-.vscode/settings.json
-
-# mac stuff
-._.DS_Store
-.DS_Store
