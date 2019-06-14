@@ -8,11 +8,12 @@ def scan(device, up_to):
     avaliable = []
     for i in range(up_to):
         try:
-            ser = serial.Serial("{}{}".format(device, i))
-            avaliable.append(ser.portstr)
-            ser.close()
+            current_serial = serial.Serial("{}{}".format(device, i))
+            avaliable.append(current_serial.portstr)
         except serial.SerialException:
             pass
+        finally:
+            current_serial.close()
 
     len_avaliable = len(avaliable)
     if len_avaliable == 1 :
@@ -29,5 +30,3 @@ def scan(device, up_to):
             print(s)
         print("using the first")
         return avaliable[0]
-
-scan("/dev/ttyACM", 3)

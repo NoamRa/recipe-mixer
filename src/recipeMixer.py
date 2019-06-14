@@ -1,49 +1,90 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# import gevent and patch
+from gevent import monkey
+
+monkey.patch_all()
+
 # site packages
 import datetime
 import json
 import os
 import logging
+from threading import Thread
+import serial
 
 # external packages
 from flask import Flask, render_template
-from flask_serial import Serial
-from flask_socketio import SocketIO
-import eventlet
-eventlet.monkey_patch()
+from flask_socketio import SocketIO, send, emit
 
 # local imports
 from logic import recipeParser, textureModifier, recipeFormatter, randomer
 from hardware import serialFinder
 
 config = {
+    "host": "0.0.0.0",
+    "port": 9090,
+    "debug": True,
     "recipesDir": ["..", "recipes", "cake.txt"],
     "templatesDir": ["server", "templates"],
+    "staticDir": ["server", "static"],
     "do_random": True,
-    "serial_devices": "/dev/ttyACM"
+    "serial_devices": "/dev/ttyACM",
 }
-do_random = config["do_random"]
 
-serial_port = serialFinder.scan(config["serial_devices"], 5)
+do_random = config["do_random"]
 
 script_dir = os.path.dirname(__file__)
 template_folder = os.path.abspath(os.path.join(script_dir, *config.get("templatesDir")))
-print("template_folder: " + template_folder)
+static_folder = os.path.abspath(os.path.join(script_dir, *config.get("staticDir")))
 
-app = Flask(__name__, template_folder=template_folder)
-app.config["SERIAL_TIMEOUT"] = 0
-app.config["SERIAL_PORT"] = serial_port
-app.config["SERIAL_BAUDRATE"] = 9600
-app.config["SERIAL_BYTESIZE"] = 8
-app.config["SERIAL_PARITY"] = "N"
-app.config["SERIAL_STOPBITS"] = 1
+app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+app.config["SECRET_KEY"] = "mixit!"
 
-app.config["MAX_SIZE"] = 1024 # SocketIO
+# region serial and socketio
+socketio = SocketIO(app, async_mode="gevent")
 
-ser = Serial(app)
-socketio = SocketIO(app)
+serial_port = serialFinder.scan(config["serial_devices"], 5)
+serial_conf = serial.Serial(serial_port, 9600, timeout=0.1)
+
+
+@socketio.on("my event", namespace="/serial")
+def handle_my_custom_event(json):
+    print("received json: " + str(json))
+
+
+def handle_serial(data):
+    print("serial message: " + data)
+    payload = {"serial_message": str(data)}
+    socketio.emit("serial_message", payload, namespace="/serial")
+
+
+connected_to_serial = False
+
+
+def read_serial(ser):
+    global connected_to_serial
+    while not connected_to_serial:
+        connected_to_serial = True
+        while True:
+            data = ser.readline()
+            if data:
+                data = data.decode().strip()
+            if len(data) > 0:
+                handle_serial(data)
+
+        print("closing serial")
+        ser.close()
+
+
+read_serial_thread = Thread(
+    target=read_serial, args=(serial_conf,), name="serial_thread"
+)
+print("starting serial thread")
+read_serial_thread.start()
+
+# endregion
 
 
 def mix_recipe():
@@ -69,6 +110,9 @@ def mix_recipe():
     return formatted_recipe
 
 
+# region routes
+
+
 @app.route("/")
 def index():
     now = datetime.datetime.now()
@@ -83,25 +127,9 @@ def index():
     return render_template("index.html", **templateData)
 
 
-@socketio.on("send")
-def handle_send(json_str):
-    data = json.loads(json_str)
-    ser.on_send(data["message"])
-    print("send to serial: %s"%data["message"])
-
-
-@ser.on_message()
-def handle_message(msg):
-    print("receive a message:", msg)
-    socketio.emit("serial_message", data={"message": str(msg)})
-
-
-@ser.on_log()
-def handle_logging(level, info):
-    print(level, info)
-
+# endregion routes
 
 if __name__ == "__main__":
-    print("Starting Recipe Mixer server")
-    socketio.run(app, host="0.0.0.0", port=9090, debug=False)
+    print("Starting Recipe Mixer server...")
+    socketio.run(app, host=config["host"], port=config["port"], debug=config["debug"])
 
