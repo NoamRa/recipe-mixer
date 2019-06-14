@@ -16,14 +16,17 @@ eventlet.monkey_patch()
 
 # local imports
 from logic import recipeParser, textureModifier, recipeFormatter, randomer
-
+from hardware import serialFinder
 
 config = {
     "recipesDir": ["..", "recipes", "cake.txt"],
     "templatesDir": ["server", "templates"],
     "do_random": True,
+    "serial_devices": "/dev/ttyACM"
 }
 do_random = config["do_random"]
+
+serial_port = serialFinder.scan(config["serial_devices"], 5)
 
 script_dir = os.path.dirname(__file__)
 template_folder = os.path.abspath(os.path.join(script_dir, *config.get("templatesDir")))
@@ -31,7 +34,7 @@ print("template_folder: " + template_folder)
 
 app = Flask(__name__, template_folder=template_folder)
 app.config["SERIAL_TIMEOUT"] = 0
-app.config["SERIAL_PORT"] = "/dev/ttyACM1"
+app.config["SERIAL_PORT"] = serial_port
 app.config["SERIAL_BAUDRATE"] = 9600
 app.config["SERIAL_BYTESIZE"] = 8
 app.config["SERIAL_PARITY"] = "N"
