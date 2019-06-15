@@ -52,7 +52,7 @@ socketio = SocketIO(app, async_mode="gevent")
 serial_port = serialFinder.scan(config["serial_devices"], 5)
 serial_conf = serial.Serial(serial_port, 9600, timeout=0.1)
 
-serial_data_dict = { "serial_message": "511" }
+serial_data_dict = { "serial_message": "512" }
 
 @socketio.on("my event", namespace="/serial")
 def handle_my_custom_event(json):
