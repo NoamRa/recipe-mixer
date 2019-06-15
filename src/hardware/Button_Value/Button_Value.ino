@@ -78,6 +78,10 @@ void loop() {
             digitalWrite(5, LOW);  
             if (sensorVal == 0) {
                Serial.println(sensorAnalog);
+//               Serial.println("|");
+//               Serial.println(ButtonValue);
+
+
             }
         }
         else if (ledLevel==2){
@@ -86,7 +90,9 @@ void loop() {
             digitalWrite(3, LOW);
             digitalWrite(5, LOW);
             if (sensorVal == 0) {
-               Serial.println(sensorAnalog);
+              Serial.println(sensorAnalog);
+//              Serial.println("|");
+//              Serial.println(ButtonValue);
             } 
         }
 
@@ -96,7 +102,9 @@ void loop() {
             digitalWrite(3, LOW);
             digitalWrite(4, LOW); 
             if (sensorVal == 0) {
-               Serial.println(sensorAnalog);
+              Serial.println(sensorAnalog);
+//              Serial.println("|");
+//              Serial.println(ButtonValue);
             }
         }
         
@@ -111,6 +119,7 @@ void loop() {
 
 //    digitalWrite(13, HIGH);
   }
-    delay(300);        // delay in between reads for stability
+    delay(500);        // delay in between reads for stability
 
+}
 }
