@@ -10,10 +10,9 @@ def scan(device, up_to):
         try:
             current_serial = serial.Serial("{}{}".format(device, i))
             avaliable.append(current_serial.portstr)
+            current_serial.close()
         except serial.SerialException:
             pass
-        finally:
-            current_serial.close()
 
     len_avaliable = len(avaliable)
     if len_avaliable == 1 :
