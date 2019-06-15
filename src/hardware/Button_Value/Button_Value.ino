@@ -1,54 +1,72 @@
-/*
-  Input Pull-up Serial
 
-  This example demonstrates the use of pinMode(INPUT_PULLUP). It reads a digital
-  input on pin 2 and prints the results to the Serial Monitor.
-
-  The circuit:
-  - momentary switch attached from pin 2 to ground
-  - built-in LED on pin 13
-
-  Unlike pinMode(INPUT), there is no pull-down resistor necessary. An internal
-  20K-ohm resistor is pulled to 5V. This configuration causes the input to read
-  HIGH when the switch is open, and LOW when it is closed.
-
-  created 14 Mar 2012
-  by Scott Fitzgerald
-
-  This example code is in the public domain.
-
-  http://www.arduino.cc/en/Tutorial/InputPullupSerial
-*/
-
+// texture
 const int ledCount = 3;    // the number of LEDs in the bar graph
 const int analogPin = A0;   // the pin that the potentiometer is attached to
+
+// colors
+int buttonPins[] = {8, 9, 10};       // an array of pin numbers to which LEDs are attached
+int pinCount = 3;           // the number of pins (i.e. the length of the array)
+int ButtonsState[3];
+int index;
+int ButtonValue;
+
 
 void setup() {
   //start serial connection
   Serial.begin(9600);
   //configure pin 2 as an input and enable the internal pull-up resistor
 
+//texture
   pinMode(2, INPUT_PULLUP);
-
   pinMode(3, OUTPUT);    // sets the digital pin 2 as output
   pinMode(4, OUTPUT);    // sets the digital pin 3 as output
-  pinMode(5, OUTPUT);    // sets the digital pin 4 as output   
-  
-//  pinMode(13, OUTPUT);
+  pinMode(5, OUTPUT);    // sets the digital pin 4 as output
 
+//colors
+  for (int index = 0; index < pinCount; index++) {
+    pinMode(buttonPins[index], INPUT_PULLUP);
+    ButtonsState[index] = digitalRead(buttonPins[index]);
+  }
+  
 }
 
 void loop() {
   //read the pushbutton value into a variable
+  //potentiometer loop
   int sensorVal = digitalRead(2);
   int sensorAnalog = analogRead(A0);
   int sensorReading = analogRead(analogPin);
   
-  //print out the value of the pushbutton
-//  Serial.print("button mode: ");
-//  Serial.println(sensorVal);
-
   int ledLevel = map(sensorReading, 0, 1023, 1, ledCount);
+
+  //colors  loop from the lowest pin to the highest:
+  for (int index = 0; index < pinCount; index++) {
+      ButtonValue = digitalRead(buttonPins[index]);
+
+      if (ButtonValue != ButtonsState[index]) {
+          //Serial.print("this button has changed:");
+          Serial.println(buttonPins[index]);
+          
+//          if (index == 8) {
+//            Serial.println("yellow");
+//          }
+//          else {
+//            if (index == 9) 
+//            Serial.println("blue");
+//          }
+//      }
+//          else {
+//            if (index == 10)
+//            Serial.println("green");
+//          }
+     
+          
+
+          ButtonsState[index] = ButtonValue;
+      }
+  
+
+  
 
   // Keep in mind the pull-up means the pushbutton's logic is inverted. It goes
   // HIGH when it's open, and LOW when it's pressed. Turn on pin 13 when the
