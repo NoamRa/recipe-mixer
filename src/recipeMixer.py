@@ -23,8 +23,8 @@ from logic import recipeParser, textureModifier, recipeFormatter, randomer, util
 from hardware import serialFinder
 
 config = {
-    # debug
-    "debug": True,
+    # debug flag
+    "debug": False,
     # server config
     "host": "0.0.0.0",
     "port": 9090,
@@ -36,7 +36,7 @@ config = {
     "recipesDir": ["..", "recipes", "cake.txt"],
 }
 
-do_random = True  # TODO remove when there's random from serial
+do_random = False  # TODO remove when there's random from serial
 
 # region app, socketio and serial
 
@@ -52,6 +52,7 @@ socketio = SocketIO(app, async_mode="gevent")
 serial_port = serialFinder.scan(config["serial_devices"], 5)
 serial_conf = serial.Serial(serial_port, 9600, timeout=0.1)
 
+serial_data_dict = { "serial_message": "511" }
 
 @socketio.on("my event", namespace="/serial")
 def handle_my_custom_event(json):
@@ -61,11 +62,12 @@ def handle_my_custom_event(json):
 def handle_serial(data):
     print("serial message: " + data)
     payload = {"serial_message": str(data)}
+    global serial_data_dict
+    serial_data_dict = payload
     socketio.emit("serial_message", payload, namespace="/serial")
 
 
 connected_to_serial = False
-
 
 def read_serial(ser):
     global connected_to_serial
@@ -105,8 +107,9 @@ def mix_recipe():
         )
     else:
         # print("not doing random")
+        texture_value = serial_data_dict.get("serial_message")
         mixed_recipe["ingredients"] = textureModifier.texture_modifier(
-            parsed_recepie["ingredients"], utils.translatePot(0.5)
+            parsed_recepie["ingredients"], utils.translatePot(float(texture_value))
         )
 
     formatted_recipe = recipeFormatter.format_recipe(mixed_recipe)

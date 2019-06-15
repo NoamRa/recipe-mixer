@@ -12,28 +12,28 @@ def modify_texture(ingredient, amount):
     orig_quantity = transformed["quantity"]
     if is_liquid:
         new_quantity = orig_quantity + orig_quantity * amount
-        print(
-            "{} is liquid. updating from {} to {}".format(
-                name, orig_quantity, new_quantity
-            )
-        )
+        #print(
+            #"{} is liquid. updating from {} to {}".format(
+                #name, orig_quantity, new_quantity
+            #)
+        #)
         transformed["quantity"] = new_quantity
     else:
         new_quantity = orig_quantity + orig_quantity * -amount
-        print(
-            "{} isn't liquid. updating from {} to {}".format(
-                name, orig_quantity, new_quantity
-            )
-        )
+        #print(
+            #"{} isn't liquid. updating from {} to {}".format(
+                #name, orig_quantity, new_quantity
+            #)
+        #)
         transformed["quantity"] = new_quantity
 
     if undividable:
         rounded = float(round(transformed["quantity"]))
-        print(
-            "{} is undividable. rounding from {} to {}".format(
-                name, transformed["quantity"], rounded
-            )
-        )
+        #print(
+            #"{} is undividable. rounding from {} to {}".format(
+                #name, transformed["quantity"], rounded
+            #)
+        #)
         transformed["quantity"] = rounded
 
     return transformed

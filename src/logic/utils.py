@@ -6,7 +6,10 @@ def translate(value, fromMin, fromMax, toMin, toMax):
     fromRange = fromMax - fromMin
     toRange = toMax - toMin
     valueScaled = float(value - fromMin) / float(fromRange)
-    return toMin + (valueScaled * toRange)
+    translated = toMin + (valueScaled * toRange)
+    print("translated value {} to {}".format(str(value), str(translated)))
+    return translated
+    
 
 # translate potentiomenter
 def translatePot(value):

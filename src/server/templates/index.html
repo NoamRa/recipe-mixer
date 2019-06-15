@@ -29,9 +29,10 @@
       });
       socket.on("serial_message", function(data) {
         console.log(data);
-        const text = data["serial_message"];
-        let $textarea = $("#serial_message");
-        $textarea.text("value from serial: " + text);
+        document.location.reload(true)
+        //const text = data["serial_message"];
+        //let $textarea = $("#serial_message");
+        //$textarea.text("value from serial: " + text);
       })
     });
   </script>
