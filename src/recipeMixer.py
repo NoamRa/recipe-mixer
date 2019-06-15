@@ -19,21 +19,26 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 
 # local imports
-from logic import recipeParser, textureModifier, recipeFormatter, randomer
+from logic import recipeParser, textureModifier, recipeFormatter, randomer, utils
 from hardware import serialFinder
 
 config = {
+    # debug
+    "debug": True,
+    # server config
     "host": "0.0.0.0",
     "port": 9090,
-    "debug": True,
-    "recipesDir": ["..", "recipes", "cake.txt"],
     "templatesDir": ["server", "templates"],
     "staticDir": ["server", "static"],
-    "do_random": True,
+    # serial
     "serial_devices": "/dev/ttyACM",
+    # recipe dir
+    "recipesDir": ["..", "recipes", "cake.txt"],
 }
 
-do_random = config["do_random"]
+do_random = True  # TODO remove when there's random from serial
+
+# region app, socketio and serial
 
 script_dir = os.path.dirname(__file__)
 template_folder = os.path.abspath(os.path.join(script_dir, *config.get("templatesDir")))
@@ -42,7 +47,6 @@ static_folder = os.path.abspath(os.path.join(script_dir, *config.get("staticDir"
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 app.config["SECRET_KEY"] = "mixit!"
 
-# region serial and socketio
 socketio = SocketIO(app, async_mode="gevent")
 
 serial_port = serialFinder.scan(config["serial_devices"], 5)
@@ -102,7 +106,7 @@ def mix_recipe():
     else:
         # print("not doing random")
         mixed_recipe["ingredients"] = textureModifier.texture_modifier(
-            parsed_recepie["ingredients"], 0.5
+            parsed_recepie["ingredients"], utils.translatePot(0.5)
         )
 
     formatted_recipe = recipeFormatter.format_recipe(mixed_recipe)
