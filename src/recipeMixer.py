@@ -13,6 +13,8 @@ import os
 import logging
 from threading import Thread
 import serial
+from unittest.mock import Mock
+from time import sleep
 
 # external packages
 from flask import Flask, render_template
@@ -38,10 +40,16 @@ app.config["SECRET_KEY"] = "mixit!"
 
 socketio = SocketIO(app, async_mode="gevent")
 
-serial_port = serialFinder.scan(config["serial_devices"], 5)
-serial_conf = serial.Serial(serial_port, 9600, timeout=0.1)
+if config["mock_serial"]:
+    print("SERIAL IS MOCKED!")
+    ser = Mock()
+    ser.readline = utils.mocked_readLine
+else:
+    serial_port = serialFinder.scan(config["serial_devices"], 5)
+    ser = serial.Serial(serial_port, config["serial_baud"], timeout=config["serial_timeout"])
 
-serial_data_dict = { "serial_message": "512" }
+serial_data_dict = {"serial_message": "512"}
+
 
 @socketio.on("my event", namespace="/serial")
 def handle_my_custom_event(json):
@@ -58,14 +66,16 @@ def handle_serial(data):
 
 connected_to_serial = False
 
+
 def read_serial(ser):
     global connected_to_serial
     while not connected_to_serial:
         connected_to_serial = True
         while True:
+            sleep(config["serial_timeout"]) if not config["mock_serial"] else sleep(5)
             data = ser.readline()
             if data:
-                data = data.decode().strip()
+                data = data.decode("ascii").strip()
             if len(data) > 0:
                 handle_serial(data)
 
@@ -73,9 +83,7 @@ def read_serial(ser):
         ser.close()
 
 
-read_serial_thread = Thread(
-    target=read_serial, args=(serial_conf,), name="serial_thread"
-)
+read_serial_thread = Thread(target=read_serial, args=(ser,), name="serial_thread")
 print("starting serial thread")
 read_serial_thread.start()
 
