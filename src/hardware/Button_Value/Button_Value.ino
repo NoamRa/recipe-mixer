@@ -37,7 +37,7 @@ void loop() {
   int sensorAnalog = analogRead(A0);
   int sensorReading = analogRead(analogPin);
   
-  int ledLevel = map(sensorReading, 0, 1023, 1, ledCount);
+  int ledLevel = map(sensorReading, 0, 1023, 0, ledCount);
 
   //colors  loop from the lowest pin to the highest:
   for (int index = 0; index < pinCount; index++) {
@@ -45,81 +45,83 @@ void loop() {
 
       if (ButtonValue != ButtonsState[index]) {
           //Serial.print("this button has changed:");
-          Serial.println(buttonPins[index]);
+          //Serial.println(buttonPins[index]);
           
-//          if (index == 8) {
-//            Serial.println("yellow");
-//          }
-//          else {
-//            if (index == 9) 
-//            Serial.println("blue");
-//          }
-//      }
-//          else {
-//            if (index == 10)
-//            Serial.println("green");
-//          }
+          if (buttonPins[index] == 8) {
+            Serial.print("|");
+            Serial.print("Y");
+
+          }
+          else if (buttonPins[index] == 9) {
+            Serial.print("|");
+            Serial.print("B");
+          }
+      
+          else if (buttonPins[index] == 10) {
+            Serial.print("|");
+            Serial.print("G");
+
+          }
      
           
-
           ButtonsState[index] = ButtonValue;
       }
   
-
   
-
   // Keep in mind the pull-up means the pushbutton's logic is inverted. It goes
   // HIGH when it's open, and LOW when it's pressed. Turn on pin 13 when the
   // button's pressed, and off when it's not:
   if (ledLevel==1){
-            //Serial.println("red");
             digitalWrite(3, HIGH);
             digitalWrite(4, LOW);
             digitalWrite(5, LOW);  
             if (sensorVal == 0) {
-               Serial.println(sensorAnalog);
-//               Serial.println("|");
-//               Serial.println(ButtonValue);
-
-
+               Serial.print("|");
+               Serial.print(sensorAnalog);
+               Serial.println("||");
             }
         }
         else if (ledLevel==2){
-            //Serial.println("yellow");
             digitalWrite(4, HIGH);
             digitalWrite(3, LOW);
             digitalWrite(5, LOW);
             if (sensorVal == 0) {
-              Serial.println(sensorAnalog);
-//              Serial.println("|");
-//              Serial.println(ButtonValue);
+               Serial.print("|");
+               Serial.print(sensorAnalog);
+               Serial.println("||");
+              
             } 
         }
 
        else  if (ledLevel==3){
-            //Serial.println("green");
             digitalWrite(5, HIGH);
             digitalWrite(3, LOW);
             digitalWrite(4, LOW); 
             if (sensorVal == 0) {
-              Serial.println(sensorAnalog);
-//              Serial.println("|");
-//              Serial.println(ButtonValue);
+            
+               Serial.print("|");
+               Serial.print(sensorAnalog);
+               Serial.println("||");
+
             }
         }
         
       
 
 //    digitalWrite(13, LOW);
-   else {
+   else if (ledLevel==0){
       //Serial.println("none");
       digitalWrite(5, LOW);
       digitalWrite(3, LOW);
-      digitalWrite(4, LOW);             
-
-//    digitalWrite(13, HIGH);
+      digitalWrite(4, LOW); 
+      if (sensorVal == 0) {
+        
+        Serial.println("||");
+      }
+            
   }
-    delay(500);        // delay in between reads for stability
+    delay(400);        // delay in between reads for stability
 
 }
 }
+
