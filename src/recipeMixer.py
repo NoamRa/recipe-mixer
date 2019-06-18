@@ -21,20 +21,9 @@ from flask_socketio import SocketIO, send, emit
 # local imports
 from logic import recipeParser, textureModifier, recipeFormatter, randomer, utils
 from hardware import serialFinder
+from config import config
 
-config = {
-    # debug flag
-    "debug": False,
-    # server config
-    "host": "0.0.0.0",
-    "port": 9090,
-    "templatesDir": ["server", "templates"],
-    "staticDir": ["server", "static"],
-    # serial
-    "serial_devices": "/dev/ttyACM",
-    # recipe dir
-    "recipesDir": ["..", "recipes", "cake.txt"],
-}
+config = config.getConf()
 
 do_random = False  # TODO remove when there's random from serial
 
