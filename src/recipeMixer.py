@@ -27,8 +27,6 @@ from config import config
 
 config = config.getConf()
 
-do_random = False  # TODO remove when there's random from serial
-
 # region app, socketio and serial
 
 script_dir = os.path.dirname(__file__)
@@ -46,9 +44,11 @@ if config["mock_serial"]:
     ser.readline = utils.mocked_readLine
 else:
     serial_port = serialFinder.scan(config["serial_devices"], 5)
-    ser = serial.Serial(serial_port, config["serial_baud"], timeout=config["serial_timeout"])
+    ser = serial.Serial(
+        serial_port, config["serial_baud"], timeout=config["serial_timeout"]
+    )
 
-serial_data_dict = {"serial_message": "512"}
+serial_data_dict = {"random": False, "pot_value": None, "color": None}
 
 
 @socketio.on("my event", namespace="/serial")
@@ -57,10 +57,11 @@ def handle_my_custom_event(json):
 
 
 def handle_serial(data):
-    print("serial message: " + data)
-    payload = {"serial_message": str(data)}
     global serial_data_dict
-    serial_data_dict = payload
+    serial_data_dict = utils.serial_parser(data)
+    print("serial message: " + json.dumps(serial_data_dict))
+
+    payload = {"serial_message": serial_data_dict}
     socketio.emit("serial_message", payload, namespace="/serial")
 
 
@@ -97,6 +98,7 @@ def mix_recipe():
     # print(json.dumps(parsed_recepie, indent=2))
 
     mixed_recipe = dict(parsed_recepie)
+    do_random = serial_data_dict.get("random")
     if do_random:
         # print("doing random!")
         mixed_recipe["ingredients"] = randomer.randomise_ingredients(
@@ -104,7 +106,7 @@ def mix_recipe():
         )
     else:
         # print("not doing random")
-        texture_value = serial_data_dict.get("serial_message")
+        texture_value = serial_data_dict.get("pot_value")
         mixed_recipe["ingredients"] = textureModifier.texture_modifier(
             parsed_recepie["ingredients"], utils.translatePot(float(texture_value))
         )

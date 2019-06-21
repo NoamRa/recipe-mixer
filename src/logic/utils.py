@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint, getrandbits, choice
+import re
 
 # translate value from one range to another range
 def translate(value, fromMin, fromMax, toMin, toMax):
@@ -47,3 +48,21 @@ def mocked_readLine():
     return mocked_serial.encode("ascii")
 
 
+def serial_parser(serial_string):
+    delimiter = "|"
+    # print("serial string - " + serial_string)
+    serial_data_dict = {"random": False, "pot_value": None, "color": None}
+    if serial_string[0] != delimiter or serial_string[-2:] != delimiter + delimiter:
+        return serial_data_dict
+
+    splitted = serial_string[1:-2].split(delimiter)
+    if "rand" in splitted:
+        serial_data_dict["random"] = True
+
+    if splitted[0].isdigit():
+        serial_data_dict["pot_value"] = int(splitted[0])
+
+    if len(splitted) == 2:
+        serial_data_dict["color"] = splitted[1]
+
+    return serial_data_dict
