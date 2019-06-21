@@ -111,7 +111,8 @@ def mix_recipe():
             parsed_recepie["ingredients"], utils.translatePot(float(texture_value))
         )
         food_coloring = serial_data_dict.get("color")
-        mixed_recipe = colorAdder.add_color(mixed_recipe, food_coloring)
+        if food_coloring:
+            mixed_recipe = colorAdder.add_color(mixed_recipe, food_coloring)
 
     formatted_recipe = recipeFormatter.format_recipe(mixed_recipe)
 
