@@ -5,7 +5,7 @@ def getConf():
     return {
         # debug flags
         "debug": False,
-        "mock_serial": True,
+        "mock_serial": False,
         # server config
         "host": "0.0.0.0",
         "port": 9090,
