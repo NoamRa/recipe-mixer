@@ -60,7 +60,7 @@ else:
 
 serial_data_dict = {
     "random": False,
-    "pot_value": None,
+    "pot_value": 512,
     "color": None,
     "up": False,
     "down": False,
