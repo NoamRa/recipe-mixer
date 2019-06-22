@@ -34,16 +34,23 @@ def round_fraction(number):
 
 
 def mocked_readLine():
-    switch = randint(0, 2)
-    if switch == 0:
-        mocked_serial = "|rand||"
-    elif switch == 1:
-        pot_value = randint(0, 1023)
-        mocked_serial = "|{}||".format(pot_value)
-    elif switch == 2:
-        pot_value = randint(0, 1023)
-        color = choice(["y", "b", "g"])
-        mocked_serial = "|{}|{}||".format(pot_value, color)
+    mocked_serial = ""
+
+    if True: # mock up and down toggle
+        message = choice(["up", "down"])
+        mocked_serial = "|{}||".format(message)
+
+    else:
+        switch = randint(0, 2)
+        if switch == 0:
+            mocked_serial = "|rand||"
+        elif switch == 1:
+            pot_value = randint(0, 1023)
+            mocked_serial = "|{}||".format(pot_value)
+        elif switch == 2:
+            pot_value = randint(0, 1023)
+            color = choice(["y", "b", "g"])
+            mocked_serial = "|{}|{}||".format(pot_value, color)
 
     return mocked_serial.encode("ascii")
 
@@ -51,11 +58,26 @@ def mocked_readLine():
 def serial_parser(serial_string):
     delimiter = "|"
     # print("serial string - " + serial_string)
-    serial_data_dict = {"random": False, "pot_value": None, "color": None}
+    serial_data_dict = {
+        "random": False, 
+        "pot_value": None, 
+        "color": None, 
+        "up": False, 
+        "down": False,
+    }
     if serial_string[0] != delimiter or serial_string[-2:] != delimiter + delimiter:
         return serial_data_dict
 
     splitted = serial_string[1:-2].split(delimiter)
+
+    if "up" in splitted:
+        serial_data_dict["up"] = True
+        return serial_data_dict
+
+    elif "down" in splitted:
+        serial_data_dict["down"] = True
+        return serial_data_dict
+
     if "rand" in splitted:
         serial_data_dict["random"] = True
 
