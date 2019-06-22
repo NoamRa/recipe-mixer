@@ -9,7 +9,7 @@ monkey.patch_all()
 # site packages
 import datetime
 import json
-import os
+from os.path import abspath, join, dirname
 import logging
 from threading import Thread
 import serial
@@ -21,7 +21,15 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 
 # local imports
-from logic import recipeParser, textureModifier, recipeFormatter, colorAdder, randomer, utils
+from logic import (
+    recipeParser,
+    textureModifier,
+    recipeFormatter,
+    colorAdder,
+    randomer,
+    utils,
+    fileWrapper,
+)
 from hardware import serialFinder
 from config import config
 
@@ -29,9 +37,11 @@ config = config.getConf()
 
 # region app, socketio and serial
 
-script_dir = os.path.dirname(__file__)
-template_folder = os.path.abspath(os.path.join(script_dir, *config.get("templatesDir")))
-static_folder = os.path.abspath(os.path.join(script_dir, *config.get("staticDir")))
+script_dir = dirname(__file__)
+all_recipes = fileWrapper.read_all_recipes(script_dir, config.get("recipesDir"))
+
+template_folder = abspath(join(script_dir, *config.get("templatesDir")))
+static_folder = abspath(join(script_dir, *config.get("staticDir")))
 
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 app.config["SECRET_KEY"] = "mixit!"
@@ -48,7 +58,13 @@ else:
         serial_port, config["serial_baud"], timeout=config["serial_timeout"]
     )
 
-serial_data_dict = {"random": False, "pot_value": None, "color": None}
+serial_data_dict = {
+    "random": False,
+    "pot_value": None,
+    "color": None,
+    "up": False,
+    "down": False,
+}
 
 
 @socketio.on("my event", namespace="/serial")
@@ -92,8 +108,6 @@ read_serial_thread.start()
 
 
 def mix_recipe():
-    with open(os.path.join(script_dir, *config.get("recipesDir")), "r") as reader:
-        recipe = reader.read()
     parsed_recepie = recipeParser.parse_recipe(recipe)
     # print(json.dumps(parsed_recepie, indent=2))
 
@@ -122,8 +136,8 @@ def mix_recipe():
 # region routes
 
 
-@app.route("/")
-def index():
+@app.route("/recipe")
+def recipe():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
     mixed_recipe = mix_recipe()
@@ -133,8 +147,23 @@ def index():
         "ingredients": mixed_recipe["ingredients"],
         "instructions": mixed_recipe["instructions"],
     }
-    return render_template("index.html", **templateData)
+    return render_template("recipe.html", **templateData)
 
+
+@app.route("/selection")
+def selection():
+    recipe_names = list(map(lambda recipe_obj: recipe_obj.get("name"), all_recipes))
+    selected_recipe = "Cake"
+    templateData = {
+        "recipe_names": recipe_names,
+        "selected_recipe": selected_recipe,
+    }
+    return render_template("selection.html", **templateData)
+
+
+@app.route("/")
+def index():
+    return "go to /selection or /recipe"
 
 # endregion routes
 

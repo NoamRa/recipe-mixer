@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Recipe Mixer</title>
+  <script type="text/javascript" src="{{ url_for('static', filename='socket.io.js') }}">
+  </script>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}">
+  </script>
+
+  <!-- <script type="text/javascript" charset="utf-8">
+    const url = `http://${document.domain}:${location.port}/serial`;
+    $(document).ready(function () {
+      let socket = io.connect(url);
+      socket.on('connect', function () {
+        socket.emit('my event', { data: 'I\'m connected!' });
+      });
+
+
+      $('#send').click(function (event) {
+        const message = $('#message').val();
+        const data = '{' + '"message": "' + message + '"}';
+        socket.emit("send", data = data);
+      });
+      socket.on("serial_message", function (data) {
+        console.log(data);
+        document.location.reload(true)
+        //const text = data["serial_message"];
+        //let $textarea = $("#serial_message");
+        //$textarea.text("value from serial: " + text);
+      })
+    });
+  </script> -->
+
+</head>
+
+<body>
+  <ol>
+    {% for recipe in recipe_names %}
+    <li>{{ recipe }}</li>
+    {% endfor %}
+  </ol>
+</body>
+
+</html>
