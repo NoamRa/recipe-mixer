@@ -25,7 +25,7 @@ void loop() {
   int buttonState = digitalRead(pushButton);
   // print out the state of the button:
   if (buttonState == 1){
-    Serial.println("hello");
+    Serial.println("random");
   }
   
   delay(300);        // delay in between reads for stability

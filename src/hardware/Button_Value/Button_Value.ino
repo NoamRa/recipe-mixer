@@ -10,6 +10,8 @@ int ButtonsState[3];
 int index;
 int ButtonValue;
 
+//random
+int pushButton = 6;
 
 void setup() {
   //start serial connection
@@ -27,6 +29,9 @@ void setup() {
     pinMode(buttonPins[index], INPUT_PULLUP);
     ButtonsState[index] = digitalRead(buttonPins[index]);
   }
+
+//random
+  pinMode(pushButton, INPUT);
   
 }
 
@@ -36,6 +41,8 @@ void loop() {
   int sensorVal = digitalRead(2);
   int sensorAnalog = analogRead(A0);
   int sensorReading = analogRead(analogPin);
+  int buttonState = digitalRead(pushButton);
+
   
   int ledLevel = map(sensorReading, 0, 1023, 0, ledCount);
 
@@ -76,7 +83,7 @@ void loop() {
             digitalWrite(3, HIGH);
             digitalWrite(4, LOW);
             digitalWrite(5, LOW);  
-            if (sensorVal == 1) {
+            if (sensorVal == 0) {
                Serial.print("|");
                Serial.print(sensorAnalog);
                Serial.println("||");
@@ -121,8 +128,17 @@ void loop() {
       }
             
   }
-    delay(400);        // delay in between reads for stability
 
 }
+
+
+//random
+  if (buttonState == 1){
+    Serial.print("|random");
+    Serial.println("||");
+
+  }
+  
+    delay(1000);        // delay in between reads for stability
 }
 
