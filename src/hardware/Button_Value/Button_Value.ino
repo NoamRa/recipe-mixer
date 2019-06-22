@@ -71,11 +71,12 @@ void loop() {
   // Keep in mind the pull-up means the pushbutton's logic is inverted. It goes
   // HIGH when it's open, and LOW when it's pressed. Turn on pin 13 when the
   // button's pressed, and off when it's not:
+
   if (ledLevel==1){
             digitalWrite(3, HIGH);
             digitalWrite(4, LOW);
             digitalWrite(5, LOW);  
-            if (sensorVal == 0) {
+            if (sensorVal == 1) {
                Serial.print("|");
                Serial.print(sensorAnalog);
                Serial.println("||");
