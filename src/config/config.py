@@ -16,10 +16,6 @@ def getConf():
         "serial_baud": 9600,
         "serial_timeout": 0.01,
         # recipe dir
-<<<<<<< HEAD
-        "recipesDir": ["..", "recipes", "cake.txt"],
-    }
-=======
         "recipesDir": ["..", "recipes"],
     }
->>>>>>> f5581705a373b27952c08473936d1170b09b0e95
+
