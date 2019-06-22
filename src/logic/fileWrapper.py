@@ -37,7 +37,7 @@ def read_all_recipes(script_dir, recipes_dir):
     }
     """
 
-    out = []
+    all_recipes = []
     recipes_files = list_recipe_files(script_dir, recipes_dir)
     for recipe in recipes_files:
         file_path = resolve_recipe_full_path(script_dir, recipes_dir, recipe)
@@ -46,6 +46,6 @@ def read_all_recipes(script_dir, recipes_dir):
         name = recipe.get("name")
 
         recipe_obj = {"name": name, "path": file_path, "recipe": recipe}
-        out.append(recipe_obj)
+        all_recipes.append(recipe_obj)
 
-    return out
+    return all_recipes
