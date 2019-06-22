@@ -2,32 +2,27 @@
 
 <head>
   <title>Recipe Mixer</title>
-  <script 
-    type="text/javascript" 
-    src="{{ url_for('static', filename='socket.io.js') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='socket.io.js') }}">
   </script>
-  
-  <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-      crossorigin="anonymous">
+
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}">
   </script>
-        
+
   <script type="text/javascript" charset="utf-8">
     const url = `http://${document.domain}:${location.port}/serial`;
-    $(document).ready(function() {
+    $(document).ready(function () {
       let socket = io.connect(url);
-      socket.on('connect', function() {
-        socket.emit('my event', {data: 'I\'m connected!'});
+      socket.on('connect', function () {
+        socket.emit('my event', { data: 'I\'m connected!' });
       });
-      
-      
-      $('#send').click(function(event) {
+
+
+      $('#send').click(function (event) {
         const message = $('#message').val();
         const data = '{' + '"message": "' + message + '"}';
-        socket.emit("send", data=data);
+        socket.emit("send", data = data);
       });
-      socket.on("serial_message", function(data) {
+      socket.on("serial_message", function (data) {
         console.log(data);
         document.location.reload(true)
         //const text = data["serial_message"];
@@ -46,15 +41,15 @@
   <h3 id="serial_message"></h3>
   <h4>Ingredients</h4>
   <ol>
-    {% for ingredient in ingredients %} 
-    <li>{{ ingredient }}</li> 
-    {% endfor %} 
+    {% for ingredient in ingredients %}
+    <li>{{ ingredient }}</li>
+    {% endfor %}
   </ol>
   <h4>Instructions</h4>
   <ol>
-    {% for instruction in instructions %} 
-    <li>{{ instruction }}</li> 
-    {% endfor %} 
+    {% for instruction in instructions %}
+    <li>{{ instruction }}</li>
+    {% endfor %}
   </ol>
 </body>
 
