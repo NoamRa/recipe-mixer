@@ -81,9 +81,8 @@ def handleUpOrDown():
     idx = recipe_names.index(state["selected_recipe"])
     length = len(recipe_names)
 
-    print("recipe_names: " + str(recipe_names), " length: " + str(length))
-    print("currently selected " + state["selected_recipe"] + " in idx " + str(idx))
-
+    # print("recipe_names: " + str(recipe_names), " length: " + str(length))
+    # print("currently selected " + state["selected_recipe"] + " in idx " + str(idx))
 
     if serial_data_dict.get("up") and idx > 0:
         state["selected_recipe"] = recipe_names[idx - 1]
@@ -126,21 +125,22 @@ read_serial_thread.start()
 
 
 def mix_recipe():
-    parsed_recepie = recipeParser.parse_recipe(recipe)
-    # print(json.dumps(parsed_recepie, indent=2))
+    selected_recipe_obj = [recipe_obj for recipe_obj in all_recipes if recipe_obj["name"] == state.get("selected_recipe")]
+    parsed_recipe = selected_recipe_obj[0].get("recipe")
+    # print(json.dumps(parsed_recipe, indent=2))
 
-    mixed_recipe = dict(parsed_recepie)
+    mixed_recipe = dict(parsed_recipe)
     do_random = serial_data_dict.get("random")
     if do_random:
         # print("doing random!")
         mixed_recipe["ingredients"] = randomer.randomise_ingredients(
-            parsed_recepie["ingredients"]
+            parsed_recipe["ingredients"]
         )
     else:
         # print("not doing random")
         texture_value = serial_data_dict.get("pot_value")
         mixed_recipe["ingredients"] = textureModifier.texture_modifier(
-            parsed_recepie["ingredients"], utils.translatePot(float(texture_value))
+            parsed_recipe["ingredients"], utils.translatePot(float(texture_value))
         )
         food_coloring = serial_data_dict.get("color")
         if food_coloring:
