@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Recipe Selection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+  <script type="text/javascript" src="{{ url_for('static', filename='socket.io.js') }}">
+  </script>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}">
+  </script>
+
+  <script type="text/javascript" charset="utf-8">
+    "use strict";
+    const url = `http://${document.domain}:${location.port}/serial`;
+    $(document).ready(function () {
+      let socket = io.connect(url);
+      // socket.on('connect', function () {
+      //   socket.emit('my event', { data: 'I\'m connected!' });
+      // });
+      // $('#send').click(function (event) {
+      //   const message = $('#message').val();
+      //   const data = '{' + '"message": "' + message + '"}';
+      //   socket.emit("send", data = data);
+      // });
+      socket.on("serial_message", function (data) {
+        console.log(data);
+        document.location.reload(true);
+      })
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="selection">
+    <div class="header">Choose recipe:</div>
+    <ol class="recipe-list">
+      {% for recipe in recipe_names %}
+        {% if recipe == selected_recipe %}
+          <li class="selected">{{ recipe }}</li>
+        {% else %}
+          <li>{{ recipe }}</li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </div>
+</body>
+
+</html>
