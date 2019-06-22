@@ -1,4 +1,7 @@
 
+//recipe selection
+const int X_pin = A1; // analog pin connected to X output
+
 // texture
 const int ledCount = 3;    // the number of LEDs in the bar graph
 const int analogPin = A0;   // the pin that the potentiometer is attached to
@@ -37,6 +40,7 @@ void setup() {
   
 }
 
+//boolean for texture
 boolean checkInRange(int x, int y, int range) {
   /*
    * check if "y" is close to "x" by "range"
@@ -53,14 +57,24 @@ boolean checkInRange(int x, int y, int range) {
 
 
 void loop() {
+
   //read the pushbutton value into a variable
   //potentiometer loop
   int sensorVal = digitalRead(2);
   int potCurrent = analogRead(analogPin);
   int buttonState = digitalRead(pushButton);
+
+  //recipe selection
+  if ((analogRead(X_pin)) < 450){
+    Serial.println("|down||");
+  }
+
+  if ((analogRead(X_pin)) > 600){
+    Serial.println("|up||");
+  }
   
   //int ledLevel = map(sensorReading, 0, 1023, 0, ledCount);    
-if (checkInRange(potState, potCurrent, 100)){
+  if (checkInRange(potState, potCurrent, 100)){
         potState = potCurrent;
 
     if ((potCurrent > 450) && (potCurrent < 600)){
