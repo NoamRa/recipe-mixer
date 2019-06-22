@@ -36,14 +36,14 @@ def round_fraction(number):
 def mocked_readLine():
     mocked_serial = ""
 
-    if True: # mock up and down toggle
+    if False: # mock up and down toggle
         message = choice(["up", "down"])
         mocked_serial = "|{}||".format(message)
 
     else:
         switch = randint(0, 2)
         if switch == 0:
-            mocked_serial = "|rand||"
+            mocked_serial = "|random||"
         elif switch == 1:
             pot_value = randint(0, 1023)
             mocked_serial = "|{}||".format(pot_value)
@@ -78,7 +78,7 @@ def serial_parser(serial_string):
         serial_data_dict["down"] = True
         return serial_data_dict
 
-    if "rand" in splitted:
+    if "random" in splitted:
         serial_data_dict["random"] = True
 
     if splitted[0].isdigit():
