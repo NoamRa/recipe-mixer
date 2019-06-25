@@ -73,6 +73,7 @@ state = {"selected_recipe": all_recipes[0].get("name")}
 def handle_my_custom_event(json):
     print("received json: " + str(json))
 
+
 def handleUpOrDown():
     global state
     global serial_data_dict
