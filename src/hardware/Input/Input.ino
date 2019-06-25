@@ -119,25 +119,25 @@ void loop() {
           
           if (buttonPins[index] == 8) {
             Serial.print("|");
-            Serial.print("Y");
-            Serial.print("|");
             Serial.print(potCurrent);
+            Serial.print("|");
+            Serial.print("y");
             Serial.println("||");
 
           }
           else if (buttonPins[index] == 9) {
             Serial.print("|");
-            Serial.print("B");
-            Serial.print("|");
             Serial.print(potCurrent);
+            Serial.print("|");
+            Serial.print("b");
             Serial.println("||");
           }
       
           else if (buttonPins[index] == 10) {
             Serial.print("|");
-            Serial.print("G");
-            Serial.print("|");
             Serial.print(potCurrent);
+            Serial.print("|");
+            Serial.print("g");
             Serial.println("||");
 
           }

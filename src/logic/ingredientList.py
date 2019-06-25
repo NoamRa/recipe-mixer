@@ -2,10 +2,13 @@ def ingredient_list():
     return [
         {"name": "milk", "properties": ["liquid"]},
         {"name": "whole milk", "properties": ["liquid"]},
+        {"name": "vanille extract", "properties": ["liquid"]},
         {"name": "vanilla extract", "properties": ["liquid"]},
+        {"name": "pure vanille extract", "properties": ["liquid"]},
         {"name": "pure vanilla extract", "properties": ["liquid"]},
         {"name": "eggs", "properties": ["liquid", "undividable"]},
         {"name": "egg white", "properties": ["liquid", "undividable"]},
+        {"name": "egg whites", "properties": ["liquid", "undividable"]},
         {"name": "butter", "properties": ["liquid"]},
         {"name": "unsalted butter", "properties": ["liquid"]},
         {"name": "food coloring", "properties": ["liquid", "coloring"]},
