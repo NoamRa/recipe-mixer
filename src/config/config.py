@@ -19,6 +19,9 @@ def getConf():
         "recipesDir": ["..", "recipes"],
         # printer settings
         "printer_name": "portable_printer",
-        "printer_opts": {}
+        "printer_opts": {
+            "cpi": "16", 
+            "lpi": "8"
+        }
     }
 

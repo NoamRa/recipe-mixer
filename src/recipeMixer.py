@@ -167,6 +167,7 @@ def recipe():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
     mixed_recipe = mix_recipe()
+    global state
     state["mixed_recipe"] = mixed_recipe # put in state for later use
     templateData = {
         "time": timeString,
