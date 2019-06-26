@@ -29,6 +29,7 @@ from logic import (
     randomer,
     utils,
     fileWrapper,
+    recipePrinter,
 )
 from hardware import serialFinder
 from config import config
@@ -53,7 +54,7 @@ if config["mock_serial"]:
     ser = Mock()
     ser.readline = utils.mocked_readLine
 else:
-    serial_port = serialFinder.scan(config["serial_devices"], 5)
+    serial_port = serialFinder.scan(config["serial_devices"], 3)
     ser = serial.Serial(
         serial_port, config["serial_baud"], timeout=config["serial_timeout"]
     )
@@ -66,12 +67,16 @@ serial_data_dict = {
     "down": False,
 }
 
-state = {"selected_recipe": all_recipes[0].get("name")}
+state = {
+    "selected_recipe": all_recipes[0].get("name"),
+    "mixed_recipe": None,
+}
 
 
-@socketio.on("my event", namespace="/serial")
+@socketio.on("idle for 5 seconds", namespace="/serial")
 def handle_my_custom_event(json):
-    print("received json: " + str(json))
+    print("Client was idle for 5 seconds. It's printing time!")
+    recipePrinter.print_recipe(state["mixed_recipe"])
 
 
 def handleUpOrDown():
@@ -106,7 +111,7 @@ def read_serial(ser):
     while not connected_to_serial:
         connected_to_serial = True
         while True:
-            sleep(config["serial_timeout"]) if not config["mock_serial"] else sleep(3)
+            sleep(config["serial_timeout"]) if not config["mock_serial"] else sleep(10)
             data = ser.readline()
             if data:
                 data = data.decode("ascii").strip()
@@ -125,7 +130,11 @@ read_serial_thread.start()
 
 
 def mix_recipe():
-    selected_recipe_obj = [recipe_obj for recipe_obj in all_recipes if recipe_obj["name"] == state.get("selected_recipe")]
+    selected_recipe_obj = [
+        recipe_obj
+        for recipe_obj in all_recipes
+        if recipe_obj["name"] == state.get("selected_recipe")
+    ]
     parsed_recipe = selected_recipe_obj[0].get("recipe")
     # print(json.dumps(parsed_recipe, indent=2))
 
@@ -147,7 +156,6 @@ def mix_recipe():
             mixed_recipe = colorAdder.add_color(mixed_recipe, food_coloring)
 
     formatted_recipe = recipeFormatter.format_recipe(mixed_recipe)
-
     return formatted_recipe
 
 
@@ -159,6 +167,7 @@ def recipe():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
     mixed_recipe = mix_recipe()
+    state["mixed_recipe"] = mixed_recipe # put in state for later use
     templateData = {
         "time": timeString,
         "name": mixed_recipe["name"],

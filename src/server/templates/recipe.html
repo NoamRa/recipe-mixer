@@ -15,22 +15,9 @@
     const url = `http://${document.domain}:${location.port}/serial`;
     $(document).ready(function () {
       let socket = io.connect(url);
-      socket.on('connect', function () {
-        socket.emit('my event', { data: 'I\'m connected!' });
-      });
-
-
-      $('#send').click(function (event) {
-        const message = $('#message').val();
-        const data = '{' + '"message": "' + message + '"}';
-        socket.emit("send", data = data);
-      });
       socket.on("serial_message", function (data) {
         console.log(data);
         document.location.reload(true)
-        //const text = data["serial_message"];
-        //let $textarea = $("#serial_message");
-        //$textarea.text("value from serial: " + text);
       })
     });
   </script>
