@@ -98,6 +98,8 @@ def handleUpOrDown():
 def handle_serial(data):
     global serial_data_dict
     serial_data_dict = utils.serial_parser(data)
+    global state
+    state["mixed_recipe"] = mix_recipe()
     print("serial message: " + json.dumps(serial_data_dict))
     handleUpOrDown()
     socketio.emit("serial_message", serial_data_dict, namespace="/serial")
@@ -166,9 +168,7 @@ def mix_recipe():
 def recipe():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
-    mixed_recipe = mix_recipe()
-    global state
-    state["mixed_recipe"] = mixed_recipe # put in state for later use
+    mixed_recipe = state["mixed_recipe"]
     templateData = {
         "time": timeString,
         "name": mixed_recipe["name"],
