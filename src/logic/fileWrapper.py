@@ -6,6 +6,7 @@ from os.path import isfile, join
 
 from logic import recipeParser
 
+
 def list_recipe_files(script_dir, recipes_dir):
     path_to_recipes_dir = join(script_dir, *recipes_dir)
     recipes_files = [
@@ -47,5 +48,7 @@ def read_all_recipes(script_dir, recipes_dir):
 
         recipe_obj = {"name": name, "path": file_path, "recipe": recipe}
         all_recipes.append(recipe_obj)
+
+    all_recipes = sorted(all_recipes, key=lambda recipe_obj: recipe_obj.get("name"))
 
     return all_recipes
