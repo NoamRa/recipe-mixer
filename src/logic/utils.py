@@ -36,7 +36,7 @@ def round_fraction(number):
 def mocked_readLine():
     mocked_serial = ""
 
-    if False: # mock up and down toggle
+    if True: # mock up and down toggle
         message = choice(["up", "down"])
         mocked_serial = "|{}||".format(message)
 

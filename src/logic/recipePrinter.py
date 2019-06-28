@@ -42,7 +42,7 @@ def create_recipe_text(mixed_recipe):
 
 
 def print_recipe(mixed_recipe):
-    print(mixed_recipe)
+    # print(mixed_recipe)
     if not mixed_recipe: return
 
     # convert recipe to text
@@ -54,10 +54,8 @@ def print_recipe(mixed_recipe):
     recipe_file.write(recipe_text)
     recipe_file.close()
 
-    # get printer
-    conn = cups.Connection()
-
     # print file
-    printer_name = config.get("printer_name")
-    printer_opts = config.get("printer_opts")
-    conn.printFile(printer_name, recipe_path, "recipe", printer_opts)
+    # printer_name = config.get("printer_name")
+    # printer_opts = config.get("printer_opts")
+    # conn = cups.Connection() # get printers
+    # conn.printFile(printer_name, recipe_path, "recipe", printer_opts)

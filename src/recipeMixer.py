@@ -113,7 +113,7 @@ def read_serial(ser):
     while not connected_to_serial:
         connected_to_serial = True
         while True:
-            sleep(config["serial_timeout"]) if not config["mock_serial"] else sleep(10)
+            sleep(config["serial_timeout"]) if not config["mock_serial"] else sleep(3)
             data = ser.readline()
             if data:
                 data = data.decode("ascii").strip()

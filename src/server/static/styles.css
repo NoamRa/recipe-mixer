@@ -1,27 +1,60 @@
-ol, ol li{
-  list-style-type: none;
-  padding-left: 0;
+/* everything */
+
+@font-face {
+  /* Roboto Regular */
+  font-family: "Roboto";
+  src: url(/static/fonts/Roboto-Black.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 400;
 }
 
+@font-face {
+  /* Roboto Black */
+  font-family: "Roboto";
+  src: url(/static/fonts/Roboto-Black.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 900;
+}
+
+body {
+  font-family: "Roboto";
+  display: block;
+  margin: 0;
+}
+
+ol,
+ol li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
 /* selection page */
 #selection {
-  width: 95vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  font-size: 6vw;
 }
 
 #selection .header {
-  font-weight: bold;
+  width: 100%;
+  font-family: "Roboto Black", sans-serif;
+  font-weight: 900;
+  color: #da11b7;
+  border-bottom: 2px #da11b7 solid;
+  padding: 5% 10%;
 }
 
 #selection .recipe-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 120%; /* 100 + header padding */
 }
 
-#selection .recipe-list .selected {
-  font-weight: bold;
+#selection .recipe-item {
+  font-family: "Roboto Regular", sans-serif;
+  color: #333333;
+  padding: 5% 10%;
+  border-bottom: 1px #bfbfbf solid;
+}
+
+#selection .recipe-item.selected {
+  background-color: #f2ace6;
 }

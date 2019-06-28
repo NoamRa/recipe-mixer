@@ -33,13 +33,13 @@
 
 <body>
   <div id="selection">
-    <div class="header">Choose recipe:</div>
+    <div class="header">Choose recipe to remix</div>
     <ol class="recipe-list">
       {% for recipe in recipe_names %}
         {% if recipe == selected_recipe %}
-          <li class="selected">{{ recipe }}</li>
+          <li class="recipe-item selected">{{ recipe }}</li>
         {% else %}
-          <li>{{ recipe }}</li>
+          <li class="recipe-item">{{ recipe }}</li>
         {% endif %}
       {% endfor %}
     </ol>
