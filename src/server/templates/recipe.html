@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
+  <meta charset="utf-8">
   <title>Recipe Mixer</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
@@ -26,7 +28,6 @@
 
 <body>
   <h1>Recipe Mixer!</h1>
-  <h4>The date and time on the server is: {{ time }}</h4>
   <h3>Your {{ name }} recipe:</h3>
   <h3 id="serial_message"></h3>
   <h4>Ingredients</h4>

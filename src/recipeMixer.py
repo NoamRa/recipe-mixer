@@ -168,13 +168,12 @@ def mix_recipe():
 def recipe():
     now = datetime.datetime.now()
     timeString = now.strftime("%Y-%m-%d %H:%M")
-    global state
     mixed_recipe = state["mixed_recipe"]
     templateData = {
         "time": timeString,
-        "name": mixed_recipe["name"],
-        "ingredients": mixed_recipe["ingredients"],
-        "instructions": mixed_recipe["instructions"],
+        "name": mixed_recipe.get("name"),
+        "ingredients": mixed_recipe.get("ingredients"),
+        "instructions": mixed_recipe.get("instructions"),
     }
     return render_template("recipe.html", **templateData)
 
@@ -189,8 +188,11 @@ def selection():
 
 @app.route("/")
 def index():
-    return "go to /selection or /recipe"
+    return render_template("index.html")
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return index()
 
 # endregion routes
 
