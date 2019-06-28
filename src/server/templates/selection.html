@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8">
   <title>Recipe Selection</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 
-  <script type="text/javascript" src="{{ url_for('static', filename='socket.io.js') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='scripts/socket.io.js') }}">
   </script>
 
-  <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery.min.js') }}">
   </script>
 
   <script type="text/javascript" charset="utf-8">
@@ -18,7 +18,7 @@
     $(document).ready(function () {
       let socket = io.connect(url);
       socket.on('connect', function () {
-        setTimeout(function() {
+        setTimeout(function () {
           socket.emit("idle for 5 seconds", {});
         }, 5000)
       });
@@ -36,11 +36,11 @@
     <div class="header">Choose recipe to remix</div>
     <ol class="recipe-list">
       {% for recipe in recipe_names %}
-        {% if recipe == selected_recipe %}
-          <li class="recipe-item selected">{{ recipe }}</li>
-        {% else %}
-          <li class="recipe-item">{{ recipe }}</li>
-        {% endif %}
+      {% if recipe == selected_recipe %}
+      <li class="recipe-item selected">{{ recipe }}</li>
+      {% else %}
+      <li class="recipe-item">{{ recipe }}</li>
+      {% endif %}
       {% endfor %}
     </ol>
   </div>

@@ -17,7 +17,7 @@ from unittest.mock import Mock
 from time import sleep
 
 # external packages
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO, send, emit
 
 # local imports
@@ -189,6 +189,16 @@ def selection():
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(
+        join(app.static_folder, "images"),
+        "favicon.ico",
+        mimetype="image/x-icon",
+    )
+
 
 @app.errorhandler(404)
 def page_not_found(error):
