@@ -1,5 +1,5 @@
 name
-Cake
+Vanilla Cake
 
 ingredients
 1 stick butter

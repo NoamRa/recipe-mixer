@@ -25,14 +25,28 @@
       socket.on("serial_message", function (data) {
         console.log(data);
         document.location.reload(true);
-      })
+      });
     });
+
+    // function setFullScreen() {
+    //   const docEl = document.documentElement
+    //   if (docEl.requestFullscreen) {
+    //     docEl.requestFullscreen();
+    //   } else if (docEl.mozRequestFullScreen) {
+    //     docEl.mozRequestFullScreen();
+    //   } else if (docEl.webkitRequestFullscreen) {
+    //     docEl.webkitRequestFullscreen();
+    //   }
+    //   const fullscreenEl = document.querySelector("#fullscreen");
+    //   fullscreenEl.style.display = "none";
+    // }
   </script>
 
 </head>
 
 <body>
   <div id="selection">
+    <!-- <h1 id="fullscreen" onclick="setFullScreen()">go fullscreen</h1> -->
     <div class="header">Choose recipe to remix</div>
     <ol class="recipe-list">
       {% for recipe in recipe_names %}

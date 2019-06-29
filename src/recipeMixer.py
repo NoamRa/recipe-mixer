@@ -103,6 +103,8 @@ def handle_serial(data):
     print("serial message: " + json.dumps(serial_data_dict))
     handleUpOrDown()
     socketio.emit("serial_message", serial_data_dict, namespace="/serial")
+    selected_recipe_dict = { "selected_recipe": state["selected_recipe"] }
+    socketio.emit("selected_recipe", selected_recipe_dict, namespace="/serial")
 
 
 connected_to_serial = False
