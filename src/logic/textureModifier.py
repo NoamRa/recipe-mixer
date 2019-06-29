@@ -11,7 +11,7 @@ def modify_texture(ingredient, amount):
     is_liquid = "liquid" in props
     orig_quantity = transformed["quantity"]
     if is_liquid:
-        new_quantity = orig_quantity + orig_quantity * amount
+        new_quantity = orig_quantity + (orig_quantity * amount / 2)
         #print(
             #"{} is liquid. updating from {} to {}".format(
                 #name, orig_quantity, new_quantity
@@ -19,7 +19,7 @@ def modify_texture(ingredient, amount):
         #)
         transformed["quantity"] = new_quantity
     else:
-        new_quantity = orig_quantity + orig_quantity * -amount
+        new_quantity = orig_quantity + (orig_quantity * -amount / 2)
         #print(
             #"{} isn't liquid. updating from {} to {}".format(
                 #name, orig_quantity, new_quantity
