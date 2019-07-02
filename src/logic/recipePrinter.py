@@ -55,7 +55,7 @@ def print_recipe(mixed_recipe):
     recipe_file.close()
 
     # print file
-    # printer_name = config.get("printer_name")
-    # printer_opts = config.get("printer_opts")
-    # conn = cups.Connection() # get printers
-    # conn.printFile(printer_name, recipe_path, "recipe", printer_opts)
+    printer_name = config.get("printer_name")
+    printer_opts = config.get("printer_opts")
+    conn = cups.Connection() # get printers
+    conn.printFile(printer_name, recipe_path, "recipe", printer_opts)
