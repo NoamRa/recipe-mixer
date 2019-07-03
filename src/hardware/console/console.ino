@@ -21,7 +21,9 @@ int index;
 int ButtonValue;
 
 //random
-int pushButton = 6;
+int randomPin = 2;
+//int randomState = 0; 
+
 
 void setup() {
   //start serial connection
@@ -35,7 +37,6 @@ void setup() {
   strip.setBrightness(brightness); 
   
   //texture
-  pinMode(2, INPUT_PULLUP);
   pinMode(3, OUTPUT);    // sets the digital pin 2 as output
   pinMode(4, OUTPUT);    // sets the digital pin 3 as output
   pinMode(5, OUTPUT);    // sets the digital pin 4 as output
@@ -48,7 +49,9 @@ void setup() {
   }
 
 //random
-  pinMode(pushButton, INPUT);
+  pinMode(randomPin, INPUT_PULLUP);
+
+//  pinMode(randomPin, INPUT);
   
 }
 
@@ -73,7 +76,7 @@ void loop() {
   //potentiometer loop
   int sensorVal = digitalRead(2);
   int potCurrent = analogRead(analogPin);
-  int buttonState = digitalRead(pushButton);
+//  int randomState = digitalRead(randomPin);
   
   boolean shouldUpdateDanger = false;
   boolean addColor = false;
@@ -112,7 +115,7 @@ void loop() {
         shouldUpdateDanger = true;
         addColor = true;
       }
-      else if (buttonPins[index] == 9) {
+      else if (buttonPins[index] == 10) {
         Serial.print("|");
         Serial.print(potCurrent);
         Serial.print("|");
@@ -121,7 +124,7 @@ void loop() {
         shouldUpdateDanger = true;
         addColor = true;
       }
-      else if (buttonPins[index] == 10) {
+      else if (buttonPins[index] == 9) {
         Serial.print("|");
         Serial.print(potCurrent);
         Serial.print("|");
@@ -138,7 +141,10 @@ void loop() {
   // button's pressed, and off when it's not:
 
   //random
-  if (buttonState == 1) {
+  int randomState = digitalRead(randomPin);  // read input value
+
+  if (randomState == LOW) {
+//    Serial.println(randomState);
     Serial.println("|random||");
     shouldUpdateDanger = true;
     doRandom = true;
