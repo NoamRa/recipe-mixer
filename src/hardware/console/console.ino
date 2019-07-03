@@ -35,7 +35,8 @@ void setup() {
   strip.show();
   int brightness = 40; // (max = 255)
   strip.setBrightness(brightness); 
-  
+  updateDanger(512, false, false);
+
   //texture
   pinMode(3, OUTPUT);    // sets the digital pin 2 as output
   pinMode(4, OUTPUT);    // sets the digital pin 3 as output
@@ -48,10 +49,8 @@ void setup() {
     ButtonsState[index] = digitalRead(buttonPins[index]);
   }
 
-//random
+  //random
   pinMode(randomPin, INPUT_PULLUP);
-
-//  pinMode(randomPin, INPUT);
   
 }
 
@@ -76,7 +75,6 @@ void loop() {
   //potentiometer loop
   int sensorVal = digitalRead(2);
   int potCurrent = analogRead(analogPin);
-//  int randomState = digitalRead(randomPin);
   
   boolean shouldUpdateDanger = false;
   boolean addColor = false;
@@ -90,8 +88,9 @@ void loop() {
   if ((analogRead(X_pin)) > 600){
     Serial.println("|up||");
   }
-  
-  if (checkInRange(potState, potCurrent, 16)) {
+
+  boolean potChanged = checkInRange(potState, potCurrent, 32);
+  if (potChanged) {
     potState = potCurrent;
     Serial.print("|");
     Serial.print(potCurrent);
@@ -109,27 +108,21 @@ void loop() {
       if (buttonPins[index] == 8) {
         Serial.print("|");
         Serial.print(potCurrent);
-        Serial.print("|");
-        Serial.print("y");
-        Serial.println("||");
+        Serial.println("|y||");
         shouldUpdateDanger = true;
         addColor = true;
       }
       else if (buttonPins[index] == 10) {
         Serial.print("|");
         Serial.print(potCurrent);
-        Serial.print("|");
-        Serial.print("b");
-        Serial.println("||");
+        Serial.print("|b||");
         shouldUpdateDanger = true;
         addColor = true;
       }
       else if (buttonPins[index] == 9) {
         Serial.print("|");
         Serial.print(potCurrent);
-        Serial.print("|");
-        Serial.print("g");
-        Serial.println("||");
+        Serial.print("|g||");
         shouldUpdateDanger = true;
         addColor = true;
       }
@@ -166,6 +159,7 @@ void updateDanger(int potCurrent, boolean addColor, boolean doRandom) {
   
   if (doRandom) {
     showDanger(9);
+//    Serial.println("Danger Zone! lvl 9");
     return;
   }
   
@@ -173,7 +167,7 @@ void updateDanger(int potCurrent, boolean addColor, boolean doRandom) {
   if (potCurrent > 512) {
     dangerLevel = map(potCurrent, 512, 1023, 1, 9);
   }
-  else {
+  else if (potCurrent < 512){
     dangerLevel = map(potCurrent, 512, 0, 1, 9);
   }
 
@@ -183,6 +177,7 @@ void updateDanger(int potCurrent, boolean addColor, boolean doRandom) {
   }
 
   showDanger(dangerLevel);
+//  Serial.println("Danger Zone! lvl " + String(dangerLevel));
   return;
   
 }
