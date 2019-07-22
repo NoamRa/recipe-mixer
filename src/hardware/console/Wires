@@ -13,4 +13,4 @@ green - GRD(Breadboard) + d9
 both to breadboard (grd + d2)
 
 //leds
-5V(Breadboard) + electricity + GRD(Breadboard) + 
+5V(Breadboard) + electricity + GRD(Breadboard) + d3
