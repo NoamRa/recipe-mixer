@@ -44,5 +44,9 @@ def ingredient_list():
         {"name": "freshly grated lemon zest", "properties": ["solid"]},
         {"name": "chocolate chips", "properties": ["solid"]},
         {"name": "semisweet milk chocolate chips", "properties": ["solid"]},
+        {"name": "biscuits", "properties": ["solid"]},
+        {"name": "margarine", "properties": ["liquid"]},
+
+
 
     ]
