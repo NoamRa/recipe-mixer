@@ -1,0 +1,16 @@
+//choose recipe (joystick)
+A1 + 5V(Breadboard) + GRD (next to d13)
+
+//texture
+5V(Breadboard) + A0 + GRD (next to digital grd)
+
+//colors
+yellow - GRD(Breadboard) + d8
+blue - GRD(Breadboard) + d10
+green - GRD(Breadboard) + d9
+
+//random
+both to breadboard (grd + d2)
+
+//leds
+5V(Breadboard) + electricity + GRD(Breadboard) + d3

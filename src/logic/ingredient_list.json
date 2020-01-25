@@ -88,6 +88,16 @@
 	"properties": ["solid"]
 },
 {
+	"name": "biscuits",
+	"properties": ["solid"]
+},
+{
+	"name": "margarine",
+	"properties": ["liquid"]
+},
+{
 	"name": "chocolate_chips",
 	"properties": ["solid"]
+
 }]
+
