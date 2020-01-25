@@ -34,9 +34,10 @@ def create_recipe_text(mixed_recipe):
     instructions = "\nInstructions:\n" + "".join(
         [format_line(l) for l in instructions_lines]
     )
-    footer = "\n\n\n"
+    footer = "\nRemixed by the Curious Cat"
+    padding = ".\n" * 20
 
-    recipe_text = header + ingredients + instructions + footer
+    recipe_text = header + ingredients + instructions + footer + padding
 
     return recipe_text
 
